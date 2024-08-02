@@ -1,0 +1,81 @@
+esphome:
+  name: evw-008
+  friendly_name: EVW-008
+
+esp8266:
+  board: esp01_1m
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "ap/key"
+
+ota:
+  - platform: esphome
+    password: "pass"
+
+wifi:
+  ssid: ssid
+  password: password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Evw-008 Fallback Hotspot"
+    password: "123"
+
+i2c:
+  sda: 4
+  scl: 5
+  scan: True
+
+one_wire:
+  - platform: gpio
+    pin: GPIO16
+
+sensor:
+  - platform: dallas_temp
+    name: "temperatura"
+
+pcf8574:
+  - id: 'pcf8574_hub'
+    address: 0x20
+
+switch:
+  - platform: gpio
+    name: "Relay 1"
+    pin:
+      pcf8574: pcf8574_hub
+      number: 0
+      mode: OUTPUT
+      inverted: True
+    id: relay_1
+  - platform: gpio
+    name: "Relay 2"
+    pin:
+      pcf8574: pcf8574_hub
+      number: 1
+      mode: OUTPUT
+      inverted: True
+    id: relay_2
+  - platform: gpio
+    name: "Relay 3"
+    pin:
+      pcf8574: pcf8574_hub
+      number: 2
+      mode: OUTPUT
+      inverted: True
+    id: relay_3
+  - platform: gpio
+    name: "Relay 4"
+    pin:
+      pcf8574: pcf8574_hub
+      number: 3
+      mode: OUTPUT
+      inverted: True
+    id: relay_4    
+
+captive_portal:
+    
